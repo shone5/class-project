@@ -1,0 +1,123 @@
+/* --- RESET --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    padding: 20px;
+    background-color: white;
+}
+
+/* --- MAIN CONTAINER --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid #333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- SHARED STYLES --- */
+/* Note: We removed 'header' from here because it needs special styling now */
+.menu-item, .footer, .text-box {
+    border: 1px solid #333;
+    padding: 15px;
+    text-align: center;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- 1. HEADER (UNIFIED BOX) --- */
+header {
+    /* The Border is now on the PARENT, not the children */
+    border: 1px solid #333; 
+    background: #f9f9f9;
+    display: flex; /* Flexbox keeps items in one continuous row */
+    align-items: center;
+    min-height: 60px;
+}
+
+.logo {
+    /* No border around the logo itself */
+    padding: 0 20px;
+    font-weight: bold;
+    display: none; /* Hidden on mobile */
+    align-items: center;
+    height: 100%;
+}
+
+.header-title {
+    /* No border around the title itself */
+    flex-grow: 1; /* Takes up all remaining space */
+    text-align: center;
+    font-weight: bold;
+}
+
+/* --- 2. MENU --- */
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Mobile: 2 cols */
+    gap: 15px;
+}
+
+/* --- 3. CONTENT & IMAGES --- */
+.content-row {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile: Stacked */
+    gap: 15px;
+}
+
+.img-box {
+    background-color: #bbb;
+    border: 1px solid #333;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    
+    /* CHANGE: Slight curvy sides */
+    border-radius: 15px; 
+}
+
+/* --- DESKTOP BREAKPOINT (>= 1024px) --- */
+@media (min-width: 1024px) {
+
+    /* HEADER: Show Logo */
+    .logo {
+        padding: 20px;
+        background-color: #bbb;
+        display: flex;
+        /* Optional: Add a divider line INSIDE the box */
+        border: 1px solid #333; 
+        width: 25%; /* Logo takes 1/4 of the width approx */
+        height: 50px;
+        justify-content: center;
+    }
+    
+    /* MENU: 4 items in a row */
+    .menu {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    /* ROW 1: Image Left */
+    .content-row {
+        grid-template-columns: 1fr 3fr;
+    }
+
+    /* ROW 2: Reverse (Text Left, Image Right) */
+    .content-row.reverse {
+        grid-template-columns: 3fr 1fr;
+    }
+    
+    /* SWAP LOGIC */
+    .content-row.reverse .text-box { order: 1; }
+    .content-row.reverse .img-box { order: 2; }
+}
