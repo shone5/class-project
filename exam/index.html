@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive News – CSS Grid</title>
+  <style>
+    :root {
+      --primary: #6f5e2f;
+      --secondary: #e07a2f;
+      --light: #f4f4f4;
+      --dark: #222;
+      --border: #ccc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* ===== HEADER (GRID) ===== */
+    header {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    header h1 {
+      text-align: center;
+      font-size: 1.4rem;
+    }
+
+    .logo {
+      width: 60px;
+      height: 40px;
+      background: #fff;
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    .icon-btn {
+      font-size: 1.3rem;
+      background: none;
+      border: 2px solid #fff;
+      color: #fff;
+      cursor: pointer;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* ===== MAIN GRID ===== */
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      grid-template-areas: "menu content news";
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    nav {
+      grid-area: menu;
+      background: #fff;
+      border: 2px solid var(--border);
+      padding: 1rem;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav li {
+      margin-bottom: 0.6rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+    }
+
+    main {
+      grid-area: content;
+      background: #fff;
+      border: 2px solid var(--border);
+      padding: 1rem;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 1rem;
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+      object-fit: cover;
+      border: 2px solid var(--border);
+    }
+
+    aside {
+      grid-area: news;
+      background: #fff;
+      border: 2px solid var(--border);
+      padding: 1rem;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    footer {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* ===== HIDDEN STATES ===== */
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+    }
+
+    /* ===== RESPONSIVE (<1024px) ===== */
+    @media (max-width: 1024px) {
+      header {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .logo {
+        display: none; /* logo disappears */
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "content"
+          "news";
+      }
+
+      nav {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        width: 220px;
+        height: calc(100% - 64px);
+        background: #fff;
+        z-index: 10;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <button class="icon-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="true">☰</button>
+    <h1>News</h1>
+    <button class="icon-btn" id="newsBtn" aria-label="Toggle news" aria-expanded="true">📰</button>
+    <div class="logo" aria-hidden="true">IMG</div>
+  </header>
+
+  <section class="layout">
+    <nav id="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="#">Menu 1</a></li>
+        <li><a href="#">Menu 2</a></li>
+        <li><a href="#">Menu 3</a></li>
+        <li><a href="#">Menu 4</a></li>
+        <li><a href="#">Menu 5</a></li>
+      </ul>
+    </nav>
+
+    <main id="content">
+      <div class="hero-img">
+        <img src="image/11207.jpg" alt="News illustration">
+      </div>
+      <h2>Car Collection</h2>
+      <p>
+        Newspaper article... Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Etiam bibendum elit eget erat. Nullam justo enim, consectetur nec,
+        ullamcorper ac, vestibulum in, elit.
+      </p>
+    </main>
+
+    <aside id="news">
+      <h3>Car News</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Etiam bibendum elit eget erat. Nullam justo enim, consectetur nec,
+        ullamcorper ac, vestibulum in, elit.
+      </p>
+    </aside>
+  </section>
+
+  <footer>Footer</footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const newsBtn = document.getElementById('newsBtn');
+    const menu = document.getElementById('menu');
+    const news = document.getElementById('news');
+
+    menuBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      menuBtn.setAttribute('aria-expanded', !menu.classList.contains('hidden'));
+    });
+
+    newsBtn.addEventListener('click', () => {
+      news.classList.toggle('hidden');
+      newsBtn.setAttribute('aria-expanded', !news.classList.contains('hidden'));
+    });
+  </script>
+  <style>
+    @media (max-width: 1024px) {
+  .logo { display: none; }
+}
+.hero-img img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+  </style>
+
+</body>
+</html>
